@@ -5,15 +5,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { 
-  BookOpen, 
-  Sparkles, 
-  Clock, 
-  Users, 
-  GraduationCap, 
-  Save, 
-  Trash2, 
-  History, 
+import {
+  BookOpen,
+  Sparkles,
+  Clock,
+  Users,
+  GraduationCap,
+  Save,
+  Trash2,
+  History,
   Plus,
   ChevronRight,
   Loader2,
@@ -69,7 +69,7 @@ export default function App() {
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       const response = await ai.models.generateContent({
-        model: "gemini-3.1-pro-preview",
+        model: "gemini-2.5-flash",
         contents: `Design a comprehensive curriculum for the following:
         Subject: ${subject}
         Target Audience: ${audience}
@@ -88,7 +88,7 @@ export default function App() {
 
       const content = response.text || "Failed to generate content.";
       const title = `${subject} for ${audience}`;
-      
+
       setCurrentCurriculum({
         title,
         subject,
@@ -143,7 +143,7 @@ export default function App() {
             <span className="font-semibold text-lg tracking-tight">Curriforge</span>
           </div>
           <div className="flex gap-4">
-            <button 
+            <button
               onClick={() => setView('designer')}
               className={cn(
                 "px-4 py-2 text-sm font-medium transition-colors rounded-full",
@@ -152,7 +152,7 @@ export default function App() {
             >
               Designer
             </button>
-            <button 
+            <button
               onClick={() => setView('history')}
               className={cn(
                 "px-4 py-2 text-sm font-medium transition-colors rounded-full flex items-center gap-2",
@@ -169,7 +169,7 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6 py-12">
         <AnimatePresence mode="wait">
           {view === 'designer' ? (
-            <motion.div 
+            <motion.div
               key="designer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -188,8 +188,8 @@ export default function App() {
                     <label className="text-xs font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-2">
                       <BookOpen size={14} /> Subject
                     </label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       placeholder="e.g. Quantum Computing, Italian Cooking"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                       value={subject}
@@ -201,8 +201,8 @@ export default function App() {
                     <label className="text-xs font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-2">
                       <Users size={14} /> Target Audience
                     </label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       placeholder="e.g. Beginners, Senior Engineers"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                       value={audience}
@@ -214,8 +214,8 @@ export default function App() {
                     <label className="text-xs font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-2">
                       <Clock size={14} /> Duration
                     </label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       placeholder="e.g. 4 weeks, 10 hours"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                       value={duration}
@@ -223,7 +223,7 @@ export default function App() {
                     />
                   </div>
 
-                  <button 
+                  <button
                     onClick={generateCurriculum}
                     disabled={isGenerating || !subject || !audience || !duration}
                     className="w-full py-4 bg-indigo-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-indigo-500/20"
@@ -241,7 +241,7 @@ export default function App() {
               {/* Output Section */}
               <div className="lg:col-span-8">
                 {currentCurriculum ? (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="bg-white rounded-3xl border border-black/5 shadow-xl overflow-hidden"
@@ -251,7 +251,7 @@ export default function App() {
                         <h2 className="text-xl font-bold">{currentCurriculum.title}</h2>
                         <p className="text-sm text-gray-500">{currentCurriculum.duration} • {currentCurriculum.audience}</p>
                       </div>
-                      <button 
+                      <button
                         onClick={saveCurriculum}
                         className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
                       >
@@ -274,7 +274,7 @@ export default function App() {
               </div>
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               key="history"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -286,7 +286,7 @@ export default function App() {
                   <h1 className="text-3xl font-bold tracking-tight">Your History</h1>
                   <p className="text-gray-500">Previously designed learning paths.</p>
                 </div>
-                <button 
+                <button
                   onClick={() => setView('designer')}
                   className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-all"
                 >
@@ -297,7 +297,7 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {history.map((item) => (
-                  <motion.div 
+                  <motion.div
                     key={item.id}
                     layoutId={`card-${item.id}`}
                     className="bg-white p-6 rounded-2xl border border-black/5 shadow-sm hover:shadow-md transition-all group cursor-pointer"
@@ -310,7 +310,7 @@ export default function App() {
                       <div className="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
                         <BookOpen size={20} />
                       </div>
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           if (item.id) deleteCurriculum(item.id);
